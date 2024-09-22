@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XPVVAI Confirmation</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            color: #00ff00;
+            background: linear-gradient(135deg, #000000, #1a1a1a);
+            position: relative;
+            animation: backgroundAnimation 10s infinite alternate;
+        }
+        @keyframes backgroundAnimation {
+            0% { background: #000000; }
+            100% { background: #1a1a1a; }
+        }
+        .falling {
+            position: absolute;
+            white-space: nowrap;
+            font-size: 20px;
+            animation: fall linear infinite;
+            cursor: pointer;
+        }
+        @keyframes fall {
+            0% { transform: translateY(100vh); }
+            100% { transform: translateY(-100%); }
+        }
+        .popup {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) perspective(600px);
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            text-align: center;
+            z-index: 2;
+            width: 80%;
+            max-width: 400px;
+        }
+        .button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.5s;
+        }
+        .yes { background-color: #28a745; }
+        .no { background-color: #dc3545; }
+        .button:hover { transform: rotateY(180deg); }
+        footer {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            color: white;
+            font-size: 16px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 5px 10px;
+            border-radius: 5px;
+            z-index: 3;
+        }
+    </style>
+    <script>
+        let passwordAttempts = 0;
+
+        function showPopup() {
+            document.getElementById("popup").style.display = "block";
+        }
+
+        function showPasswordPopup() {
+            document.getElementById("passwordPopup").style.display = "block";
+        }
+
+        function handleResponse(response) {
+            const popup = document.getElementById("popup");
+            popup.style.display = "none";
+            if (response === "yes") {
+                showPasswordPopup();
+            } else {
+                window.location.href = "https://www.google.com";
+            }
+        }
+
+        function checkPassword() {
+            const passwordInput = document.getElementById("passwordInput").value;
+            if (passwordInput === "xpblem2024") {
+                document.getElementById("passwordPopup").style.display = "none";
+                showConfirmationPopup();
+            } else {
+                passwordAttempts++;
+                if (passwordAttempts >= 5) {
+                    alert("Too many incorrect attempts. Redirecting to Google.");
+                    window.location.href = "https://www.google.com";
+                } else {
+                    alert("Incorrect password. Please try again.");
+                }
+            }
+        }
+
+        function confirmRedirect() {
+            window.location.href = "https://xpvvai.wordpress.com/content-finder/";
+        }
+
+        function createFallingText() {
+            const container = document.body;
+            const characters = '01';
+            for (let i = 0; i < 150; i++) {
+                const fallingText = document.createElement('div');
+                fallingText.className = 'falling';
+                fallingText.style.left = Math.random() * 100 + 'vw';
+                fallingText.style.animationDuration = Math.random() * 0.5 + 0.5 + 's';
+                fallingText.innerText = characters.charAt(Math.floor(Math.random() * characters.length));
+                container.appendChild(fallingText);
+            }
+        }
+
+        window.onload = function() {
+            showPopup();
+            createFallingText();
+        };
+    </script>
+</head>
+<body>
+    <div id="popup" class="popup" style="display:none;">
+        <h1>Welcome to the XPVVAI Website</h1>
+        <p>This website is managed by XPBLEM and is intended for personal use by XPBLEM, their friends, and family members.</p>
+        <p>Do you know XPBLEM?</p>
+        <button class="button yes" onclick="handleResponse('yes')">Yes</button>
+        <button class="button no" onclick="handleResponse('no')">No</button>
+    </div>
+
+    <div id="passwordPopup" class="popup" style="display:none;">
+        <h2>Enter Password</h2>
+        <input type="password" id="passwordInput" placeholder="Password" />
+        <button class="button yes" onclick="checkPassword()">Submit</button>
+        <button class="button no" onclick="document.getElementById('passwordPopup').style.display='none'">Cancel</button>
+    </div>
+
+    <footer>
+        Designed by Ranjan's Brothers
+    </footer>
+</body>
+</html>
